@@ -18,6 +18,7 @@ public class main {
     public static void main(String[] args) {
         //OLALALALALA C UNE aplication tottalelent ifferente mintenant !!!! 
         //oeopfjsm,fl
+        System.out.println("chose");
     }
     
 }
