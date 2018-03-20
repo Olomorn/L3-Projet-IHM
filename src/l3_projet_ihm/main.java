@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package l3.projet.ihm;
+package l3_projet_ihm;
 
 /**
  *
  * @author olomorn
  */
-public class L3ProjetIHM {
+public class main {
 
     /**
      * @param args the command line arguments
