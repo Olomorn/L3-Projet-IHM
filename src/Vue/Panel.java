@@ -11,6 +11,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
@@ -18,14 +19,14 @@ import javax.swing.JPanel;
  *
  * @author jerem
  */
-public class Panel extends JPanel implements MouseListener{
+public class Panel extends JPanel implements MouseListener, MouseMotionListener{
     
     private boolean [][] tab;
     private int largeur;
     private int hauteur;
     private Controleur controleur;
-    private int longeur_cellule;
-    private int hauteur_cellule;
+    private float longeur_cellule;
+    private float hauteur_cellule;
     public Panel(){
         super();
         this.setBorder(BorderFactory.createLineBorder(Color.yellow));
@@ -40,7 +41,7 @@ public class Panel extends JPanel implements MouseListener{
         }
         
          this.addMouseListener(this);
-       
+         this.addMouseMotionListener(this);
         
     }
     
@@ -51,6 +52,7 @@ public class Panel extends JPanel implements MouseListener{
         this.setTab(t);
         
         this.addMouseListener(this);
+         this.addMouseMotionListener(this);
     }
     
     
@@ -69,17 +71,17 @@ public class Panel extends JPanel implements MouseListener{
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
-        resize();
-        int x = e.getX()/longeur_cellule;
-        int y = e.getY()/hauteur_cellule;
-        controleur.catchClick(new Point(x,y));
-        
+       
         
     }
     @Override
     public void mousePressed(MouseEvent e) {
-       
+        
+        resize();
+        int x = e.getX()/(int)longeur_cellule;
+        int y = e.getY()/(int)hauteur_cellule;
+        controleur.catchClick(new Point(x,y));
+        
     }
 
     @Override
@@ -107,12 +109,16 @@ public class Panel extends JPanel implements MouseListener{
              for(int j = 0; j < this.hauteur; j++){
                  if(this.tab[i][j]){
                      g.setColor(Color.blue);
+                     g.fillOval(i*(int)this.longeur_cellule, j*(int)this.hauteur_cellule, (int)this.longeur_cellule, (int)this.hauteur_cellule);
                  }else{
                      g.setColor(Color.white);
+                     g.fillRect(i*(int)this.longeur_cellule, j*(int)this.hauteur_cellule, (int)this.longeur_cellule, (int)this.hauteur_cellule);
                  }
-                 g.fillRect(i*this.longeur_cellule, j*this.hauteur_cellule, this.longeur_cellule, this.hauteur_cellule);
+                 
              }
          }
+         g.setColor(Color.red);
+        
          
       
     }
@@ -120,5 +126,18 @@ public class Panel extends JPanel implements MouseListener{
     
     public void setLienControleur(Controleur c ){
         this.controleur = c;
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+     
+    }
+
+    private Point mousePos = new Point(0,0);
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        mousePos = e.getPoint();
+         repaint();
+         
     }
 }
